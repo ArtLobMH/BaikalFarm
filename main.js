@@ -1,7 +1,8 @@
 var config = {
     type: Phaser.AUTO,
-    width: 1500,
+    width: 1700,
     height: 1000,
+    backgroundColor: '#4488aa',
     pixelArt: true,
     scene: {
         preload: preload,
@@ -11,7 +12,7 @@ var config = {
     title: "Байкальская ферма",
     scale: {
         mode: Phaser.Scale.FIT
-    }
+    }    
 };
 
 var game = new Phaser.Game(config);
@@ -46,8 +47,8 @@ function create ()
     map.createLayer(3, tilesets)
     map.createLayer(4, tilesets)
 
-    this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
-    this.cameras.main.setZoom(2);
+    this.cameras.main.setBounds(-600, 0, map.widthInPixels, map.heightInPixels);
+    this.cameras.main.setZoom(1.5);
 
     var cursors = this.input.keyboard.createCursorKeys();
 
@@ -61,7 +62,6 @@ function create ()
         };
 
         this.controls = new Phaser.Cameras.Controls.FixedKeyControl(controlConfig);
-
 }
 
 function update (time, delta)
