@@ -1,46 +1,70 @@
-//import 'plants.js'
-
 var config = {
     type: Phaser.AUTO,
     width: 1500,
     height: 1000,
+    pixelArt: true,
     scene: {
         preload: preload,
         create: create,
         update: update
     },
-    title: "Байкальская ферма"
+    title: "Байкальская ферма",
+    scale: {
+        mode: Phaser.Scale.FIT
+    }
 };
 
 var game = new Phaser.Game(config);
 
 function preload ()
 {
-    this.load.image('tiles', 'assets/textures.jpg');
-    this.load.image('pumpkin', 'assets/Pumpkin.png');
-    this.load.image('settButton', 'assets/sett_button.png')
-    this.load.image('resButton', 'assets/res_button.png')
-    this.load.image('menuButton', 'assets/menu_button.png')
-    this.load.image('marketButton', 'assets/market_button.png')
-    this.load.image('resourceBoard', 'assets/menu_template.png')
-    this.load.tilemapTiledJSON('tilemap', 'assets/FP_map.json')
+    this.load.image('footpathTiles', 'assets/footpath1_1.png');
+    this.load.image('beachTiles', 'assets/beach_1.png');
+    this.load.image('patchsTiles', 'assets/patchs_1.png');
+    this.load.image('houseTiles', 'assets/house_1.png');
+    this.load.image('treeTiles', 'assets/tree_1.png');
+    this.load.tilemapTiledJSON('tilemap', 'assets/BaikalFarm.json');
 }
 
 function create ()
 {
-    const map = this.make.tilemap({key: 'tilemap'})
-    const tileset = map.addTilesetImage('textures', 'tiles')
+    this.scale.displaySize.setAspectRatio( config.width/config.height );
+    this.scale.refresh();
 
-    map.createStaticLayer('floor', tileset)
-    map.createStaticLayer('grass', tileset)
-    this.add.image(1300, 100, 'resourceBoard')
-    this.add.image(1250, 50, 'marketButton')
-    this.add.image(1450, 150, 'menuButton')
-    this.add.image(1250, 150, 'resButton')
-    this.add.image(1450, 50, 'settButton')
+    var map = this.make.tilemap({key: 'tilemap'});
+    var footpathTiles = map.addTilesetImage("footpath1 (1)", 'footpathTiles');
+    var beachTiles = map.addTilesetImage("beach (1)", 'beachTiles');
+    var patchsTiles = map.addTilesetImage("patchs (1)", 'patchsTiles');
+    var houseTiles = map.addTilesetImage("house (1)", 'houseTiles');
+    var treeTiles = map.addTilesetImage("tree (1)", 'treeTiles');
+
+    const tilesets = [footpathTiles, beachTiles, patchsTiles, houseTiles, treeTiles];
+
+    map.createLayer(0, tilesets);
+    map.createLayer(1, tilesets)
+    map.createLayer(2, tilesets)
+    map.createLayer(3, tilesets)
+    map.createLayer(4, tilesets)
+
+    this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
+    this.cameras.main.setZoom(2);
+
+    var cursors = this.input.keyboard.createCursorKeys();
+
+        var controlConfig = {
+            camera: this.cameras.main,
+            left: cursors.left,
+            right: cursors.right,
+            up: cursors.up,
+            down: cursors.down,
+            speed: 0.5
+        };
+
+        this.controls = new Phaser.Cameras.Controls.FixedKeyControl(controlConfig);
+
 }
 
-function update ()
+function update (time, delta)
 {
-
+    this.controls.update(delta);
 }
