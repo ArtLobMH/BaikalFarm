@@ -25,6 +25,10 @@ function preload ()
     this.load.image('houseTiles', 'assets/house_1.png');
     this.load.image('treeTiles', 'assets/tree_1.png');
     this.load.tilemapTiledJSON('tilemap', 'assets/BaikalFarm.json');
+
+    this.load.image('marketIcon', 'assets/market_icon.png');
+    this.load.image('menuIcon', 'assets/menu_icon.png');
+    this.load.image('repIcon', 'assets/repository_icon.png');
 }
 
 function create ()
@@ -62,6 +66,10 @@ function create ()
         };
 
         this.controls = new Phaser.Cameras.Controls.FixedKeyControl(controlConfig);
+
+    const menuButt = this.add.image(400, 10, 'menuIcon')
+    const marketButt = this.add.image(450, 10, 'marketIcon')
+    const repButt = this.add.image(500, 10, 'repIcon')
 }
 
 function update (time, delta)
