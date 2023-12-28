@@ -29,6 +29,8 @@ function preload ()
     this.load.image('marketIcon', 'assets/market_icon.png');
     this.load.image('menuIcon', 'assets/menu_icon.png');
     this.load.image('repIcon', 'assets/repository_icon.png');
+
+    this.load.image('market', 'assets/market_frame2.png')
 }
 
 function create ()
@@ -51,7 +53,7 @@ function create ()
     map.createLayer(3, tilesets)
     map.createLayer(4, tilesets)
 
-    this.cameras.main.setBounds(-600, 0, map.widthInPixels, map.heightInPixels);
+    this.cameras.main.setBounds(-700, 0, map.widthInPixels, map.heightInPixels);
     this.cameras.main.setZoom(1.5);
 
     var cursors = this.input.keyboard.createCursorKeys();
@@ -67,12 +69,56 @@ function create ()
 
         this.controls = new Phaser.Cameras.Controls.FixedKeyControl(controlConfig);
 
-    const menuButt = this.add.image(400, 10, 'menuIcon')
-    const marketButt = this.add.image(450, 10, 'marketIcon')
-    const repButt = this.add.image(500, 10, 'repIcon')
-}
+    const menuButt = this.add.image(400, 10, 'menuIcon').setInteractive({ cursor: 'pointer' });
+    const marketButt = this.add.image(450, 10, 'marketIcon').setInteractive({ cursor: 'pointer' });
+    const repButt = this.add.image(500, 10, 'repIcon').setInteractive({ cursor: 'pointer' });
 
+    var market = this.add.image(100, 400, 'market').setVisible(0)
+
+    menuButt.on('pointerover', function (event)
+    {
+        this.setTint(0x888888);
+    });
+    menuButt.on('pointerout', function (event)
+    {
+        this.clearTint();
+    });
+
+    marketButt.on('pointerover', function (event)
+    {
+        this.setTint(0x888888);
+    });
+    marketButt.on('pointerout', function (event)
+    {
+        this.clearTint();
+    });
+    marketButt.on('pointerdown', function (event)
+    {
+        if (market.visible == true){
+            market.setVisible(0)
+        }
+        else{
+            market.setVisible(1)
+        }
+    });
+
+    repButt.on('pointerover', function (event)
+    {
+        this.setTint(0x888888);
+    });
+    repButt.on('pointerout', function (event)
+    {
+        this.clearTint();
+    });
+}
+/*
 function update (time, delta)
 {
     this.controls.update(delta);
+}
+*/
+
+function update ()
+{
+    
 }
